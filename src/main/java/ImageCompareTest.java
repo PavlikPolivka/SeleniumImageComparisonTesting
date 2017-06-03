@@ -15,12 +15,14 @@ public class ImageCompareTest {
     protected void takeScreenshot(WebElement element, String path) throws Exception {
         File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
         BufferedImage image = ImageIO.read(scrFile);
-        Point point = element.getLocation();
-        BufferedImage elementImage = image.getSubimage(
-                point.getX(), point.getY(),
-                element.getSize().getWidth(), element.getSize().getHeight()
-        );
-        ImageIO.write(elementImage, "png", scrFile);
+        if(element != null) {
+            Point point = element.getLocation();
+            BufferedImage elementImage = image.getSubimage(
+                    point.getX(), point.getY(),
+                    element.getSize().getWidth(), element.getSize().getHeight()
+            );
+            ImageIO.write(elementImage, "png", scrFile);
+        }
         FileUtils.copyFile(scrFile, new File(path));
     }
 
